@@ -1,7 +1,7 @@
 // Love the LORD your GOD with all thine heart and with all soul and with all thine mind
 // And love your neighbor as your self
 
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useContext } from "react";
 import { contextDefaultData, initialActivates } from "./data";
 import type { ActivateArrayType, ActivateType, TodoProviderPropType } from "./types";
 
@@ -31,3 +31,8 @@ export default function TodoProvider({ children }: TodoProviderPropType){
         </TodoContext.Provider>
     )
 }
+
+/**
+ * Use todo context
+ */
+export const useTodoContext = () => useContext(TodoContext)
