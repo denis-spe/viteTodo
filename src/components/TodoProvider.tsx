@@ -3,17 +3,35 @@
 
 import { createContext, useReducer, useContext } from "react";
 import { contextDefaultData, initialActivates } from "./data";
-import type { ActivateArrayType, ActivateType, TodoProviderPropType } from "./types";
+import type {
+  ActivateArrayType,
+  ActivateType,
+  TodoProviderPropType,
+} from "./types";
 
 // Create the todo context
-const TodoContext = createContext(contextDefaultData)
+export const TodoContext = createContext(contextDefaultData);
 
-function reducer(state: ActivateArrayType, action: ActivateType){
-    switch (action.type){
-        case "add":
-            state.push(action)
-    }
-    return state
+function reducer(
+  state: ActivateArrayType,
+  action: ActivateType
+): ActivateArrayType {
+  switch (action.type) {
+    case "add":
+      return [
+        ...state,
+        {
+          id: state.length,
+          title: action.title,
+          done: action.done,
+          type: "add",
+        },
+      ] satisfies ActivateArrayType;
+    case "remove":
+        return state.filter((value: ActivateType) => value.id !=  action.id)
+    default:
+      throw new TypeError();
+  }
 }
 
 /**
@@ -22,17 +40,17 @@ function reducer(state: ActivateArrayType, action: ActivateType){
  * @param children: react nodes.
  * @returns A context provider.
  */
-export default function TodoProvider({ children }: TodoProviderPropType){
-    const [ state, dispatch ] = useReducer(reducer, initialActivates)
+export default function TodoProvider({ children }: TodoProviderPropType) {
+  const [state, dispatch] = useReducer(reducer, initialActivates);
 
-    return (
-        <TodoContext.Provider value={{ state, dispatch}}>
-            { children }
-        </TodoContext.Provider>
-    )
+  return (
+    <TodoContext.Provider value={{ state, dispatch }}>
+      {children}
+    </TodoContext.Provider>
+  );
 }
 
 /**
  * Use todo context
  */
-export const useTodoContext = () => useContext(TodoContext)
+export const useTodoContext = () => useContext(TodoContext);
