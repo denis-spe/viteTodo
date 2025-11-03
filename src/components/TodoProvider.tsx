@@ -29,6 +29,16 @@ function reducer(
       ] satisfies ActivateArrayType;
     case "remove":
         return state.filter((value: ActivateType) => value.id !=  action.id)
+    case "modify":
+        return state.map((value: ActivateType) => {
+          if (value.id == action.id){
+            return {
+              ...value,
+              title: action.title
+            }
+          } 
+          return value
+        })
     default:
       throw new TypeError();
   }

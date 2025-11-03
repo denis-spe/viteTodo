@@ -1,6 +1,6 @@
 // Great is the LORD our GOD
 
-import type { ReactNode } from "react"
+import type { ChangeEvent, ReactNode } from "react"
 
 /**
  * Todo activate
@@ -26,9 +26,16 @@ export type TodoContextType = {
     dispatch: (activate: ActivateType) => void
 }
 
+export type ItemPropType = {
+    item: ActivateType,
+    dispatch: (activate: ActivateType) => void
+}
+
 /**
  * Todo provider property or prop
  */
 export type TodoProviderPropType = {
     children: ReactNode
 }
+
+export type InputEventType = ChangeEvent<HTMLInputElement>  

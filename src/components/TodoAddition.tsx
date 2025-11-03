@@ -5,25 +5,24 @@ import {
   Component,
   useState,
   type ChangeEvent,
-  type Context,
   type ReactNode,
 } from "react";
-import { TodoContext, useTodoContext } from "./TodoProvider";
-import type { ActivateType, TodoContextType } from "./types";
+import { useTodoContext } from "./TodoProvider";
 
 export class TodoInput extends Component {
   props: Readonly<{
     value: string;
     onchange: (event: ChangeEvent<HTMLInputElement>) => void;
   }> = {
-    value: "",
-    onchange: () => {},
-  };
+      value: "",
+      onchange: () => { },
+    };
 
   render(): ReactNode {
     return (
       <>
         <input
+          id="add-input-field"
           type="text"
           value={this.props.value}
           onChange={this.props.onchange}
@@ -38,47 +37,22 @@ export class TodoAddBtn extends Component {
     text: string;
     onClick: () => void;
   }> = {
-    text: "",
-    onClick: () => {},
-  };
+      text: "",
+      onClick: () => { },
+    };
 
   render(): ReactNode {
-    return <button onClick={this.props.onClick}>{this.props.text}</button>;
+    return (
+      <>
+
+        <button id="todo-add-btn" onClick={this.props.onClick}>
+          <span id="add-sign">+</span>
+          {this.props.text}
+          </button>
+      </>
+    );
   }
 }
-
-// export default class TodoAddition extends Component {
-//   state: Readonly<{
-//     text: string
-//   }> = {
-//     text: ""
-//   };
-
-//   static contextType: Context<TodoContextType> = TodoContext;
-//   declare context: React.ContextType<typeof TodoContext>;
-
-//   render(): ReactNode {
-//     const { state, dispatch } = this.context
-
-//     return (
-//       <>
-//         <TodoInput value={this.state.text} onchange={ (event: ChangeEvent<HTMLInputElement>) => {
-//             this.setState({text: event.target.value})
-//             event.preventDefault()
-//         } }/>
-//         <TodoAddBtn text="Add" onClick={() => {
-//           const activate: ActivateType = {
-//             type: "add",
-//             id: state.length,
-//             title: this.state.text,
-//             done: false
-//           }
-//           dispatch(activate)
-//         }}/>
-//       </>
-//     );
-//   }
-// }
 
 export default function TodoAddition() {
   const { state, dispatch } = useTodoContext();
@@ -102,6 +76,7 @@ export default function TodoAddition() {
             done: false,
             type: "add",
           });
+          setText("")
         }}
       />
     </>
